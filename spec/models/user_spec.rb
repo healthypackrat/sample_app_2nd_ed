@@ -53,6 +53,7 @@ RSpec.describe User, type: :model do
         example.user@foo.
         foo@bar_baz.com
         foo@bar+baz.com
+        foo@bar..com
       ]
 
       addresses.each do |invalid_address|
