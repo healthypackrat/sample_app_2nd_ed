@@ -86,3 +86,18 @@ aside {
   float: left;
   margin-right: 10px;
 }
+
+/* forms */
+
+#error_explanation {
+  color: $danger;
+}
+
+.field_with_errors {
+  input, textarea {
+    @extend .is-invalid;
+  }
+  .form-control {
+    color: $danger;
+  }
+}
