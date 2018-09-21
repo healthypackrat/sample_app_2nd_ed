@@ -3,6 +3,24 @@ require 'rails_helper'
 RSpec.feature "User pages", type: :feature do
   subject { page }
 
+  describe "index" do
+    before do
+      sign_in create(:user)
+      create(:user, name: 'Bob', email: 'bob@example.com')
+      create(:user, name: 'Ben', email: 'ben@example.com')
+      visit users_path
+    end
+
+    it { should have_title('All users') }
+    it { should have_text('All users') }
+
+    it "should list each user" do
+      User.all.each do |user|
+        expect(page).to have_selector('li', text: user.name)
+      end
+    end
+  end
+
   describe "profile page" do
     let(:user) { create(:user) }
 
