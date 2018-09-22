@@ -34,6 +34,7 @@ RSpec.feature "User pages", type: [:feature, :request] do
         let(:admin) { create(:admin) }
 
         before do
+          click_link 'Sign out'
           sign_in admin
           visit users_path
         end
