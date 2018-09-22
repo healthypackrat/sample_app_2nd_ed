@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature "User pages", type: :feature do
+RSpec.feature "User pages", type: [:feature, :request] do
   subject { page }
 
   describe "index" do
@@ -148,6 +148,21 @@ RSpec.feature "User pages", type: :feature do
       it { should have_link('Sign out', href: signout_path) }
       specify { expect(user.reload.name).to eq new_name }
       specify { expect(user.reload.email).to eq new_email }
+    end
+
+    describe "forbidden attributes" do
+      before do
+        sign_in user, no_capybara: true
+        patch user_path(user), params: {
+          user: {
+            admin: true,
+            password: user.password,
+            password_confirmation: user.password
+          }
+        }
+      end
+
+      specify { expect(user.reload).not_to be_admin }
     end
   end
 end
