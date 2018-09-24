@@ -69,4 +69,22 @@ RSpec.feature "MicropostPages", type: :feature do
       end
     end
   end
+
+  describe "pagination" do
+    before do
+      30.times do |i|
+        user.microposts.create!(content: "micropost #{i}")
+      end
+
+      visit user_path(user)
+    end
+
+    it { should have_selector('ul.pagination') }
+
+    it "should list each micropost" do
+      user.microposts.page(1).each do |micropost|
+        expect(page).to have_selector('span.content', text: micropost.content)
+      end
+    end
+  end
 end
