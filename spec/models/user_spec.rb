@@ -21,6 +21,7 @@ RSpec.describe User, type: :model do
   it { should respond_to(:authenticate) }
   it { should respond_to(:admin) }
   it { should respond_to(:microposts) }
+  it { should respond_to(:feed) }
 
   it { should be_valid }
   it { should_not be_admin }
@@ -184,6 +185,14 @@ RSpec.describe User, type: :model do
       microposts.each do |micropost|
         expect(Micropost.where(id: micropost.id)).to be_empty
       end
+    end
+
+    describe "status" do
+      let(:unfollowed_post) { create(:micropost, user: create(:user)) }
+
+      specify { expect(subject.feed).to include(newer_micropost) }
+      specify { expect(subject.feed).to include(older_micropost) }
+      specify { expect(subject.feed).not_to include(unfollowed_post) }
     end
   end
 end
