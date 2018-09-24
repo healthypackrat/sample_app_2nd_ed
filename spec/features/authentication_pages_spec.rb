@@ -106,6 +106,20 @@ RSpec.feature "Authentication", type: [:feature, :request] do
           it { should have_title('Sign in') }
         end
       end
+
+      describe "in the Microposts controller" do
+        describe "submitting to the create action" do
+          before { post microposts_path }
+
+          specify { expect(response).to redirect_to(signin_url) }
+        end
+
+        describe "submitting to the destroy action" do
+          before { delete micropost_path(create(:micropost)) }
+
+          specify { expect(response).to redirect_to(signin_url) }
+        end
+      end
     end
 
     describe "as wrong user" do
