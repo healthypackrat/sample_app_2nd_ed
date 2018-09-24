@@ -30,4 +30,16 @@ RSpec.feature "MicropostPages", type: :feature do
       end
     end
   end
+
+  describe "micropost destruction" do
+    before { create(:micropost, user: user) }
+
+    describe "as correct user" do
+      before { visit root_path }
+
+      it "should delete a micropost" do
+        expect { click_link 'delete' }.to change(Micropost, :count).by(-1)
+      end
+    end
+  end
 end
