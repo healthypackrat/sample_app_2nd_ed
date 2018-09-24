@@ -87,4 +87,15 @@ RSpec.feature "MicropostPages", type: :feature do
       end
     end
   end
+
+  describe "delete link" do
+    let(:other_user) { create(:user) }
+
+    before do
+      other_user.microposts.create!(content: 'foo')
+      visit user_path(other_user)
+    end
+
+    it { should_not have_selector('a', text: 'delete') }
+  end
 end
