@@ -42,4 +42,31 @@ RSpec.feature "MicropostPages", type: :feature do
       end
     end
   end
+
+  describe "micropost count" do
+    before { visit root_path }
+
+    specify { expect(page).to have_text(/\b0 microposts\b/) }
+    specify { expect(page).not_to have_text(/\b0 micropost\b/) }
+
+    describe "post a micropost" do
+      before do
+        fill_in 'micropost_content', with: 'foo'
+        click_button 'Post'
+      end
+
+      specify { expect(page).to have_text(/\b1 micropost\b/) }
+      specify { expect(page).not_to have_text(/\b1 microposts\b/) }
+
+      describe "post another micropost" do
+        before do
+          fill_in 'micropost_content', with: 'bar'
+          click_button 'Post'
+        end
+
+        specify { expect(page).to have_text(/\b2 microposts\b/) }
+        specify { expect(page).not_to have_text(/\b2 micropost\b/) }
+      end
+    end
+  end
 end
