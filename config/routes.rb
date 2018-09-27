@@ -10,9 +10,15 @@ Rails.application.routes.draw do
   get    'signin'  => 'sessions#new'
   delete 'signout' => 'sessions#destroy'
 
-  resources :users
+  resources :users do
+    member do
+      get :following, :followers
+    end
+  end
 
   resources :sessions, only: [:create]
 
   resources :microposts, only: [:create, :destroy]
+
+  resources :relationships, only: [:create, :destroy]
 end
