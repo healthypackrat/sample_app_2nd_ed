@@ -1,24 +1,8 @@
-# README
+# Ruby on Rails Tutorial Sample App
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Ruby on Rails チュートリアルの[第2版 (Rails 4.0)](https://railstutorial.jp/?version=4.0)をRails 5.2を使って実装
 
-Things you may want to cover:
+変更点:
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+  * Rails 4.0 => Rails 5.2
+  * RSpec 2 => RSpec 3
