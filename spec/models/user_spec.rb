@@ -193,10 +193,21 @@ RSpec.describe User, type: :model do
 
     describe "status" do
       let(:unfollowed_post) { create(:micropost, user: create(:user)) }
+      let(:followed_user) { create(:user) }
+
+      before do
+        @user.follow!(followed_user)
+        3.times { followed_user.microposts.create!(content: 'Lorem ipsum') }
+      end
 
       specify { expect(subject.feed).to include(newer_micropost) }
       specify { expect(subject.feed).to include(older_micropost) }
       specify { expect(subject.feed).not_to include(unfollowed_post) }
+      specify do
+        followed_user.microposts.each do |micropost|
+          expect(subject.feed).to include(micropost)
+        end
+      end
     end
   end
 
